@@ -1,0 +1,28 @@
+version: '3'
+networks:
+  fastapi-demo:
+
+services:
+  mongo:
+    image: mongo
+    environment:
+      - MONGODB_INITDB_ROOT_USERNAME=root
+      - MONGODB_INITDB_ROOT_PASSWORD=example
+    volumes:
+      - type: bind
+        source: ./data
+        target: /data/db
+    networks:
+      - fastapi-demo
+  fastapi:
+    build:
+      context: ./
+      dockerfile: dockerfiles/fastapi.dockerfile
+    environment:
+      - MONGO_DETAILS=mongodb://mongo:27017
+    ports:
+      - 8000:80
+    depends_on:
+      - mongo
+    networks:
+      - fastapi-demo
