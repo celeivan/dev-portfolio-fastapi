@@ -15,6 +15,7 @@ services:
     networks:
       - fastapi-demo
   fastapi:
+    image: registry.thenightowl.co.za/portfolio.fastapi-demo
     build:
       context: ./
       dockerfile: dockerfiles/fastapi.dockerfile
